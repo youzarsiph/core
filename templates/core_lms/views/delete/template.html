@@ -1,0 +1,20 @@
+{% extends 'core_lms/base/dashboard.html' %}
+{% load i18n %}
+{% block title %}{% translate 'Delete ' %}{% endblock %}
+{% block breadcrumb %}
+    {% block breadcrumb_item %}{% endblock %}
+    <li class="breadcrumb-item active">
+        <i class="bi bi-trash"></i>
+        {% translate 'Delete' %}
+    </li>
+{% endblock %}
+{% block content %}
+    <h1 class="display-1">
+        {% block page_title %}{% translate 'Delete' %}{% endblock %}
+    </h1>
+    <p>
+        {% translate 'Are you sure you want to delete?' %}
+    </p>
+    {% include 'core_lms/includes/utilties/form.html' with form_tag=1 method='post' %}
+    {% include 'core_lms/includes/utilties/submit.html' with cancel_url=url %}
+{% endblock %}

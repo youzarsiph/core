@@ -1,0 +1,20 @@
+{% extends 'core_lms/base/base_site.html' %}
+{% load i18n %}
+{% block title %}{% translate 'Register' %}{% endblock %}
+{% block content %}
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="card card-body shadow rounded-3">
+            <h1 class="display-1 mb-4">
+                {% translate 'Sign Up' %}
+            </h1>
+            {% include 'core_lms/includes/utilties/form.html' with form_tag=1 floating_labels=1 %}
+            {% include 'core_lms/includes/utilties/submit.html' with reset=1 %}
+            <small class="text-muted">
+                {% translate 'Alredy have an account?' %}
+                <a href="{% url 'core_lms:login' %}">
+                    {% translate 'Login' %}
+                </a>
+            </small>
+        </div>
+    </div>
+{% endblock %}
