@@ -17,7 +17,7 @@ Clone the repo:
 git clone https://github.com/youzarsiph/core_lms.git
 ```
 
-Install JApp, in `mysite/settings.py`:
+Install core_lms, in `mysite/settings.py`:
 
 ```python
 INSTALLED_APPS = [
