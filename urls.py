@@ -4,18 +4,37 @@ from core_lms.views.main import *
 from django.urls import reverse_lazy
 from django.contrib.auth import views
 
-
 app_name = 'core_lms'
-urlpatterns = [
-    # Main views
+main_patterns = [
+    # Public views
     path('', IndexView.as_view(), name='index'),
     path('about/', AboutView.as_view(), name='about'),
     path('contact/', ContactView.as_view(), name='contact'),
-    path('dashbaord/', DashboardView.as_view(), name='dashboard'),
+    path('learn/', ProgramListView.as_view(), name='learn'),
+
+    # Programs
 
     # Courses
-    path('learn/course/new/', CourseCreationView.as_view(), name='create_course'),
+    path('courses/', CourseListView.as_view(), name='courses'),
+    path('courses/<int:id>/', CourseDetailView.as_view(), name='course_detail'),
 
+    # Administration views
+    # Programs
+    path('dashbaord/', DashboardView.as_view(), name='dashboard'),
+    path('dashbaord/programs/', ProgramListView.as_view(), name='program_list'),
+    path('dashboard/programs/new/', ProgramCreationView.as_view(), name='create_program'),
+    path('dashboard/programs/<int:id>/edit/', ProgramEditView.as_view(), name='edit_program'),
+    path('dashboard/programs/<int:id>/delete/', ProgramDeletionView.as_view(), name='delete_program'),
+
+    # Courses
+    path('dashbaord/courses/', CourseListView.as_view(), name='course_list'),
+    path('dashboard/courses/new/', CourseCreationView.as_view(), name='create_course'),
+    path('dashboard/courses/<int:id>/edit/', CourseEditView.as_view(), name='edit_course'),
+    path('dashboard/courses/<int:id>/delete/', CourseDeletionView.as_view(), name='delete_course'),
+
+]
+
+auth_patterns = [
     # Custom authentication patterns
     path(
         'accounts/login/',
@@ -104,3 +123,5 @@ urlpatterns = [
         name='reset_complete'
     ),
 ]
+
+urlpatterns = main_patterns + auth_patterns

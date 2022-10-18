@@ -21,6 +21,16 @@ class StyledUserCreationForm(UserCreationForm):
                 field.widget.attrs['class'] = 'form-control'
                 field.widget.attrs['placeholder'] = field.label
 
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email')
+
+
+class ProgramCreationForm(StyledModelForm):
+    class Meta:
+        model = Program
+        fields = ('title', 'about', 'description')
+
 
 class CourseCreationForm(StyledModelForm):
     class Meta:
@@ -37,7 +47,7 @@ class WeekCreationForm(StyledModelForm):
 class SectionCreationForm(StyledModelForm):
     class Meta:
         model = Section
-        fields = ('title', )
+        fields = ('title',)
 
 
 class LectureCreationForm(StyledModelForm):

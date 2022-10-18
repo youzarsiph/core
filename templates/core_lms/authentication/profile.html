@@ -7,7 +7,7 @@
     </li>
 {% endblock %}
 {% block content %}
-    <div class="p-lg-5 p-3 mb-4 rounded-3 border">
+    <div class="p-lg-5 p-3 mb-2 rounded-3 border">
         <div class="container-fluid py-5">
             <h1 class="display-1">
                 {% translate 'Welcome ' %}{{ request.user.username }}
@@ -34,7 +34,7 @@
     </div>
     <div class="row align-items-md-stretch g-4">
         <div class="col-md-6">
-            <div class="h-100 p-3 text-white bg-dark rounded-3">
+            <div class="card card-body text-white bg-dark rounded-3">
                 <h2 class="display-6">
                     {% translate 'Change the password' %}
                 </h2>
@@ -50,7 +50,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="h-100 p-3 border rounded-3">
+            <div class="card card-body rounded-3">
                 <h2 class="display-6">
                     {% translate 'Reset Password' %}
                 </h2>

@@ -49,7 +49,8 @@ class DeletionView(TemplateNameMixin, DeleteView):
     extension = '.html'
 
     def get_success_url(self):
-        return reverse_lazy('core_lms:' + self.model._meta.verbose_name.lower() + '_list')
+        model_name = self.model._meta.verbose_name.title().lower()
+        return reverse_lazy(f'core_lms:{model_name}_list')
 
 
 # Generic Views with Messages

@@ -1,3 +1,10 @@
 {% extends 'core_lms/views/create/template.html' %}
 {% load i18n %}
 {% block page_title %}{% translate 'Create Course' %}{% endblock %}
+{% block breadcrumb_item %}
+    <li class="breadcrumb-item">
+        <a href="{% url 'core_lms:course_list' %}">
+            {% translate 'Courses' %}
+        </a>
+    </li>
+{% endblock %}

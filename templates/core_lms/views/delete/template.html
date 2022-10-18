@@ -9,12 +9,14 @@
     </li>
 {% endblock %}
 {% block content %}
-    <h1 class="display-1">
+    <h1 class="display-1 mb-5">
         {% block page_title %}{% translate 'Delete' %}{% endblock %}
     </h1>
     <p>
         {% translate 'Are you sure you want to delete?' %}
     </p>
     {% include 'core_lms/includes/utilties/form.html' with form_tag=1 method='post' %}
-    {% include 'core_lms/includes/utilties/submit.html' with cancel_url=url %}
+    {% block submit_line %}
+        {% include 'core_lms/includes/utilties/submit.html' %}
+    {% endblock %}
 {% endblock %}

@@ -12,14 +12,20 @@ class MessageMixin:
     """
     Base mixin class to add success and error messages.
     """
-    success_message = str()
-    error_message = str()
+    action: str
+    error_message: str
+    success_message: str
+
+    def __init__(self):
+        model_name = self.model._meta.verbose_name.title().capitalize()
+        self.success_message = f'{model_name} was {self.action} successfully.'
 
 
 class MessageMixinCreateView(MessageMixin):
     """
     A mixin for CreateView to set success and error messages.
     """
+    action = 'created'
 
     def post(self, request, *args, **kwargs):
         try:
@@ -34,6 +40,7 @@ class MessageMixinUpdateView(MessageMixin):
     """
     A mixin for UpdateView to set success and error messages.
     """
+    action = 'updated'
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -45,6 +52,7 @@ class MessageMixinDeleteView(MessageMixin):
     """
     A mixin for DeleteView to set success and error messages.
     """
+    action = 'deleted'
 
     def post(self, request, *args, **kwargs):
         messages.success(request, self.success_message)

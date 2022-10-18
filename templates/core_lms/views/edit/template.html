@@ -1,6 +1,6 @@
 {% extends 'core_lms/base/dashboard.html' %}
 {% load i18n %}
-{% block title %}{% translate 'Create ' %}{% endblock %}
+{% block title %}{% translate 'Edit ' %}{% endblock %}
 {% block breadcrumb %}
     {% block breadcrumb_item %}{% endblock %}
     <li class="breadcrumb-item active">
@@ -9,12 +9,13 @@
     </li>
 {% endblock %}
 {% block content %}
-    <h1 class="display-1">
-        {% block page_title %}{% translate 'Create' %}{% endblock %}
+    <h1 class="display-1 mb-5">
+        {% block page_title %}{% translate 'Edit ' %}{% endblock %}
     </h1>
-    {% block urls %}
-        {# Define the cancel_url and delete_url here #}
+    {% block form %}
+        {% include 'core_lms/includes/utilties/form.html' with form_tag=1 method='post' floating_labels=1 %}
     {% endblock %}
-    {% include 'core_lms/includes/utilties/form.html' with form_tag=1 method='post' floating_labels=1 %}
-    {% include 'core_lms/includes/utilties/save_submit.html' with reset=1 delete=1 cancel_url=url delete_url=uri %}
+    {% block submit_line %}
+        {% include 'core_lms/includes/utilties/save_submit.html' with reset=1 %}
+    {% endblock %}
 {% endblock %}
