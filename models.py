@@ -1,43 +1,33 @@
-from django.contrib.auth import get_user_model
+""" Data Models """
+
+
 from django.db import models
 from django.conf import settings
-from django.urls import reverse_lazy
 from django.contrib.auth.models import AbstractUser
-
-User = get_user_model()
-
-
-class BaseModel:
-    """
-    A mixin class to provide get_absolute_url method to model classes following the convention.
-    Requires ListView names to be modelName_list.
-    """
-
-    def __str__(self):
-        return self.title
-
-    def get_absolute_url(self):
-        suffix = self._meta.verbose_name.lower()
-        return reverse_lazy('core_lms:' + suffix + '_list')
 
 
 # Create your models here.
-# class CoreUser(AbstractUser):
-#     image = models.ImageField(
-#         null=True,
-#         blank=True,
-#         upload_to='users/images/',
-#         help_text='Profile image'
-#     )
-#     bio = models.CharField(
-#         null=True,
-#         blank=True,
-#         max_length=128,
-#         help_text='Tell us about yourself'
-#     )
+class User(AbstractUser):
+    """ User Model """
+
+    image = models.ImageField(
+        null=True,
+        blank=True,
+        upload_to='users/images/',
+        help_text='Profile image'
+    )
+    bio = models.CharField(
+        null=True,
+        blank=True,
+        max_length=128,
+        help_text='Tell us about yourself'
+    )
 
 
 class Program(models.Model):
+    """ Program Model """
+
+    # The teacher of the program
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE
@@ -62,12 +52,15 @@ class Program(models.Model):
 
 
 class Course(models.Model):
+    """ Course Model """
+
+    # The teacher of the course
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE
     )
-    # Todo rename this to program
-    specialization = models.ForeignKey(
+    # The program that the course belongs to
+    program = models.ForeignKey(
         Program,
         on_delete=models.SET_NULL,
         null=True,
@@ -75,8 +68,9 @@ class Course(models.Model):
     )
     title = models.CharField(
         unique=True,
+        db_index=True,
         max_length=128,
-        help_text='Course title (Required)'
+        help_text='Course title (Required)',
     )
     about = models.CharField(
         max_length=1024,
@@ -93,12 +87,16 @@ class Course(models.Model):
 
 
 class Week(models.Model):
+    """ Week Model """
+
+    # The course that the course belongs to
     course = models.ForeignKey(
         Course,
         on_delete=models.CASCADE
     )
     title = models.CharField(
         max_length=128,
+        db_index=True,
         help_text='Week title (Required)'
     )
     about = models.CharField(
@@ -111,12 +109,16 @@ class Week(models.Model):
 
 
 class Section(models.Model):
+    """ Section Model """
+
+    # The week that the section belongs to
     week = models.ForeignKey(
         Week,
         on_delete=models.CASCADE
     )
     title = models.CharField(
         max_length=128,
+        db_index=True,
         help_text='Section title (Required)'
     )
 
@@ -124,13 +126,17 @@ class Section(models.Model):
         return self.week.course.title + ' > ' + self.week.title + ' > ' + self.title
 
 
-class Lecture(models.Model):
+class Lesson(models.Model):
+    """ Lesson Model """
+
+    # The section that the lesson belongs to
     section = models.ForeignKey(
         Section,
         on_delete=models.CASCADE
     )
     title = models.CharField(
         max_length=128,
+        db_index=True,
         help_text='Lecture title (Required)'
     )
     content = models.TextField(
@@ -147,12 +153,15 @@ class Lecture(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        lecture = self.section.week.course.title + ' > ' + self.section.week.title + ' > ' + self.section.title + ' > '
+        lecture = self.section.week.course.title + ' > ' + \
+            self.section.week.title + ' > ' + self.section.title + ' > '
         lecture += self.title
         return lecture
 
 
 class Member(models.Model):
+    """ Member Model """
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
@@ -164,6 +173,8 @@ class Member(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        """ Meta Data """
+
         unique_together = ('user', 'course')
 
     def __str__(self):
